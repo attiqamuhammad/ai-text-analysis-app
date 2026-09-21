@@ -1,0 +1,24 @@
+[project]
+name = "ai-text-analysis-app"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "Attiqa Muhammad", email = "attiqamuhammad009.am@gmail.com" }
+]
+requires-python = ">=3.12"
+dependencies = [
+    "fastapi>=0.141.1",
+    "presidio-analyzer>=2.2.364",
+    "rake-nltk>=1.0.6",
+    "textblob>=0.20.1",
+    "uvicorn>=0.53.0",
+    "vadersentiment>=3.3.2",
+]
+
+[project.scripts]
+ai-text-analysis-app = "ai_text_analysis_app:main"
+
+[build-system]
+requires = ["uv_build>=0.12.3,<0.13.0"]
+build-backend = "uv_build"
