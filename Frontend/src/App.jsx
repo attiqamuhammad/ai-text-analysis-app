@@ -1,5 +1,6 @@
 import { useState } from "react";
 import "./App.css";
+const API_URL = import.meta.env.VITE_API_URL;
 
 function App() {
   const [text, setText] = useState("");
@@ -17,7 +18,7 @@ function App() {
     setError("");
 
     try {
-      const response = await fetch("http://127.0.0.1:8000/analyze-agent", {
+      const response = await fetch(`${API_URL}/analyze-agent`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -273,8 +274,8 @@ function App() {
       </main>
 
       <footer>
-        <p>AI Text Analysis App • Built with React + FastAPI</p>
-      </footer>
+  <p>AI Text Analysis App</p>
+</footer>
     </div>
   );
 }
