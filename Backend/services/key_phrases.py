@@ -1,5 +1,26 @@
+import nltk
 from rake_nltk import Rake
 
+
+# --------------------------------------------------
+# Ensure required NLTK resources are available
+# --------------------------------------------------
+
+try:
+    nltk.data.find("tokenizers/punkt_tab")
+except LookupError:
+    nltk.download("punkt_tab", quiet=True)
+
+
+try:
+    nltk.data.find("corpora/stopwords")
+except LookupError:
+    nltk.download("stopwords", quiet=True)
+
+
+# --------------------------------------------------
+# Custom Stopwords
+# --------------------------------------------------
 
 CUSTOM_STOPWORDS = {
     "i", "am", "is", "are", "was", "were",
@@ -12,6 +33,10 @@ CUSTOM_STOPWORDS = {
     "example", "com", "www", "http", "https",
 }
 
+
+# --------------------------------------------------
+# Key Phrase Extraction
+# --------------------------------------------------
 
 def extract_key_phrases(text: str) -> dict:
     """
