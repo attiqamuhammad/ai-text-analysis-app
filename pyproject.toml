@@ -9,6 +9,7 @@ authors = [
 requires-python = ">=3.12"
 dependencies = [
     "fastapi[standard]>=0.141.1",
+    "nltk>=3.10.3",
     "presidio-analyzer>=2.2.364",
     "rake-nltk>=1.0.6",
     "textblob>=0.20.1",
@@ -18,6 +19,9 @@ dependencies = [
 
 [project.scripts]
 ai-text-analysis-app = "ai_text_analysis_app:main"
+
+[tool.fastapi]
+entrypoint = "Backend.main:app"
 
 [build-system]
 requires = ["uv_build>=0.12.3,<0.13.0"]

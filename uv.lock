@@ -22,6 +22,7 @@ version = "0.1.0"
 source = { editable = "." }
 dependencies = [
     { name = "fastapi", extra = ["standard"] },
+    { name = "nltk" },
     { name = "presidio-analyzer" },
     { name = "rake-nltk" },
     { name = "textblob" },
@@ -32,6 +33,7 @@ dependencies = [
 [package.metadata]
 requires-dist = [
     { name = "fastapi", extras = ["standard"], specifier = ">=0.141.1" },
+    { name = "nltk", specifier = ">=3.10.3" },
     { name = "presidio-analyzer", specifier = ">=2.2.364" },
     { name = "rake-nltk", specifier = ">=1.0.6" },
     { name = "textblob", specifier = ">=0.20.1" },
