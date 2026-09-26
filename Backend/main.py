@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+
 from Backend.models import AnalysisRequest
 from Backend.services.sentiment import analyze_sentiment
 from Backend.services.tone import analyze_tone
@@ -13,23 +14,40 @@ from Backend.services.content_aware import analyze_content_aware
 from Backend.agent.orchestrator import analyze_text_with_agent
 
 
+# --------------------------------------------------
+# FastAPI App
+# --------------------------------------------------
+
 app = FastAPI(
     title="AI Text Analysis API",
     description="AI-powered text analysis application",
     version="1.0.0",
 )
+
+
+# --------------------------------------------------
+# CORS Configuration
+# --------------------------------------------------
+
 app.add_middleware(
     CORSMiddleware,
-)
-allow_origins=[
-    "http://localhost:5173",
-    "http://127.0.0.1:5173",
-    "https://ai-text-analysis-app.vercel.app",
-]
-allow_credentials=True,
-allow_methods=["*"],
-allow_headers=["*"],
+    allow_origins=[
+        # Local frontend
+        "http://localhost:5173",
+        "http://127.0.0.1:5173",
 
+        # Production frontend - Vercel
+        "https://ai-text-analysis-app.vercel.app",
+    ],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+
+# --------------------------------------------------
+# Root Endpoint
+# --------------------------------------------------
 
 @app.get("/")
 def root():
@@ -38,6 +56,10 @@ def root():
     }
 
 
+# --------------------------------------------------
+# Health Check
+# --------------------------------------------------
+
 @app.get("/health")
 def health_check():
     return {
@@ -45,16 +67,29 @@ def health_check():
     }
 
 
+# --------------------------------------------------
+# Main Text Analysis Endpoint
+# --------------------------------------------------
+
 @app.post("/analyze")
 def analyze_text(request: AnalysisRequest):
+
     sentiment_result = analyze_sentiment(request.text)
+
     tone_result = analyze_tone(request.text)
+
     safety_result = analyze_safety(request.text)
+
     ner_result = analyze_ner(request.text)
+
     key_phrases_result = extract_key_phrases(request.text)
+
     pii_result = analyze_pii(request.text)
+
     summary_result = generate_summary(request.text)
+
     topics_result = extract_topics(request.text)
+
     content_aware_result = analyze_content_aware(request.text)
 
     return {
@@ -69,6 +104,12 @@ def analyze_text(request: AnalysisRequest):
         "content_aware": content_aware_result,
     }
 
+
+# --------------------------------------------------
+# AI Agent Analysis Endpoint
+# --------------------------------------------------
+
 @app.post("/analyze-agent")
 def analyze_with_agent(request: AnalysisRequest):
+
     return analyze_text_with_agent(request.text)
